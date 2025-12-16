@@ -3,15 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:cordly_client/core/router/app_router.dart';
 import 'package:cordly_client/core/theme/app_theme.dart';
+import 'package:cordly_client/env.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Supabase (Use empty strings as placeholder if env vars missing during dev)
+  // Initialize Supabase with actual credentials
   await Supabase.initialize(
-    url: const String.fromEnvironment('SUPABASE_URL', defaultValue: ''),
-    anonKey:
-        const String.fromEnvironment('SUPABASE_ANON_KEY', defaultValue: ''),
+    url: Env.supabaseUrl,
+    anonKey: Env.supabaseAnonKey,
+    authOptions: const FlutterAuthClientOptions(
+      authFlowType: AuthFlowType.pkce,
+    ),
   );
 
   runApp(const ProviderScope(child: CordlyApp()));

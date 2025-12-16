@@ -46,7 +46,13 @@ class _AppShellState extends State<AppShell> {
     ),
   ];
 
-  static const _routes = ['/home', '/execute', '/calendar', '/people', '/assistant'];
+  static const _routes = [
+    '/',
+    '/execute',
+    '/calendar',
+    '/people',
+    '/assistant'
+  ];
 
   @override
   void didChangeDependencies() {
@@ -148,16 +154,15 @@ class _AppShellState extends State<AppShell> {
                         ))
                     .toList(),
               ),
-            
+
             // Vertical divider
-            if (isWideScreen)
-              const VerticalDivider(width: 1, thickness: 1),
-            
+            if (isWideScreen) const VerticalDivider(width: 1, thickness: 1),
+
             // Main content
             Expanded(child: widget.child),
           ],
         ),
-        
+
         // Bottom navigation for narrow screens (Mobile)
         bottomNavigationBar: isWideScreen
             ? null
@@ -194,7 +199,7 @@ class _CommandPaletteDialogState extends State<CommandPaletteDialog> {
   final _focusNode = FocusNode();
 
   final _commands = [
-    _Command('Go to Home', Icons.home, '/home'),
+    _Command('Go to Home', Icons.home, '/'),
     _Command('Go to Execute', Icons.check_circle, '/execute'),
     _Command('Go to Calendar', Icons.calendar_today, '/calendar'),
     _Command('Go to People', Icons.people, '/people'),
@@ -220,7 +225,8 @@ class _CommandPaletteDialogState extends State<CommandPaletteDialog> {
         _filteredCommands = _commands;
       } else {
         _filteredCommands = _commands
-            .where((cmd) => cmd.label.toLowerCase().contains(query.toLowerCase()))
+            .where(
+                (cmd) => cmd.label.toLowerCase().contains(query.toLowerCase()))
             .toList();
       }
     });
